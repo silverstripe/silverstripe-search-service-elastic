@@ -1,4 +1,4 @@
-SilverStripe\SearchService\Tests\Fake\TagFake:
+SilverStripe\SearchServiceElastic\Tests\Fake\TagFake:
   one:
     Title: Tag one
   two:
@@ -6,13 +6,13 @@ SilverStripe\SearchService\Tests\Fake\TagFake:
   three:
     Title: Tag three
 
-SilverStripe\SearchService\Tests\Fake\ImageFake:
+SilverStripe\SearchServiceElastic\Tests\Fake\ImageFake:
   one:
     URL: '/image-one/'
-    Tags: =>SilverStripe\SearchService\Tests\Fake\TagFake.two,=>SilverStripe\SearchService\Tests\Fake\TagFake.three
+    Tags: =>SilverStripe\SearchServiceElastic\Tests\Fake\TagFake.two,=>SilverStripe\SearchServiceElastic\Tests\Fake\TagFake.three
   two:
     URL: '/image-two/'
-    Tags: =>SilverStripe\SearchService\Tests\Fake\TagFake.one,=>SilverStripe\SearchService\Tests\Fake\TagFake.two
+    Tags: =>SilverStripe\SearchServiceElastic\Tests\Fake\TagFake.one,=>SilverStripe\SearchServiceElastic\Tests\Fake\TagFake.two
 
 SilverStripe\Security\Member:
   one:
@@ -25,42 +25,36 @@ SilverStripe\Security\Member:
     FirstName: member-three-first
     Surname: member-three-last
 
-SilverStripe\SearchService\Tests\Fake\DataObjectFake:
+SilverStripe\SearchServiceElastic\Tests\Fake\DataObjectFake:
   one:
     Title: Dataobject one
-    Tags: =>SilverStripe\SearchService\Tests\Fake\TagFake.one,=>SilverStripe\SearchService\Tests\Fake\TagFake.two
+    Tags: =>SilverStripe\SearchServiceElastic\Tests\Fake\TagFake.one,=>SilverStripe\SearchServiceElastic\Tests\Fake\TagFake.two
     Member: =>SilverStripe\Security\Member.one
-    Images: =>SilverStripe\SearchService\Tests\Fake\ImageFake.one
+    Images: =>SilverStripe\SearchServiceElastic\Tests\Fake\ImageFake.one
     Sort: 1
     ShowInSearch: 1
   two:
     Title: Dataobject two
-    Tags: =>SilverStripe\SearchService\Tests\Fake\TagFake.two,=>SilverStripe\SearchService\Tests\Fake\TagFake.three
+    Tags: =>SilverStripe\SearchServiceElastic\Tests\Fake\TagFake.two,=>SilverStripe\SearchServiceElastic\Tests\Fake\TagFake.three
     Member: =>SilverStripe\Security\Member.two
-    Images: =>SilverStripe\SearchService\Tests\Fake\ImageFake.two
+    Images: =>SilverStripe\SearchServiceElastic\Tests\Fake\ImageFake.two
     Sort: 2
     ShowInSearch: 0
   three:
     Title: Dataobject three
-    Tags: =>SilverStripe\SearchService\Tests\Fake\TagFake.one
+    Tags: =>SilverStripe\SearchServiceElastic\Tests\Fake\TagFake.one
     Member: =>SilverStripe\Security\Member.three
     Sort: 3
     ShowInSearch: 1
 
-SilverStripe\SearchService\Tests\Fake\DataObjectFakePrivate:
+SilverStripe\SearchServiceElastic\Tests\Fake\DataObjectFakePrivate:
   one:
     Title: Dataobject one
 
-SilverStripe\SearchService\Tests\Fake\DataObjectFakeVersioned:
+SilverStripe\SearchServiceElastic\Tests\Fake\DataObjectFakeVersioned:
   one:
     Title: Dataobject one Versioned
     ShowInSearch: 1
   two:
     Title: Dataobject two Versioned
     ShowInSearch: 0
-
-SilverStripe\Subsites\Model\Subsite:
-  subsite1:
-    Title: 'Subsite 1'
-  subsite2:
-    Title: 'Subsite 2'

@@ -1,6 +1,6 @@
 <?php
 
-namespace SilverStripe\SearchService\Tests\Service;
+namespace SilverStripe\SearchServiceElastic\Tests\Service;
 
 use Elastic\EnterpriseSearch\AppSearch\Schema\SchemaUpdateRequest;
 use Elastic\EnterpriseSearch\Client as ElasticClient;
@@ -12,19 +12,21 @@ use Page;
 use ReflectionMethod;
 use SilverStripe\Core\Environment;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Dev\SapphireTest;
 use SilverStripe\SearchService\DataObject\DataObjectDocument;
+use SilverStripe\SearchService\Extensions\SearchServiceExtension;
 use SilverStripe\SearchService\Service\DocumentBuilder;
 use SilverStripe\SearchService\Service\IndexConfiguration;
-use SilverStripe\SearchService\Tests\Fake\DataObjectFake;
-use SilverStripe\SearchService\Tests\Fake\DataObjectFakePrivate;
-use SilverStripe\SearchService\Tests\Fake\DataObjectFakeVersioned;
-use SilverStripe\SearchService\Tests\Fake\ImageFake;
-use SilverStripe\SearchService\Tests\Fake\TagFake;
-use SilverStripe\SearchService\Tests\SearchServiceTest;
 use SilverStripe\SearchServiceElastic\Service\EnterpriseSearchService;
+use SilverStripe\SearchServiceElastic\Tests\Fake\DataObjectFake;
+use SilverStripe\SearchServiceElastic\Tests\Fake\DataObjectFakePrivate;
+use SilverStripe\SearchServiceElastic\Tests\Fake\DataObjectFakeVersioned;
+use SilverStripe\SearchServiceElastic\Tests\Fake\ImageFake;
+use SilverStripe\SearchServiceElastic\Tests\Fake\IndexConfigurationFake;
+use SilverStripe\SearchServiceElastic\Tests\Fake\TagFake;
 use SilverStripe\Security\Member;
 
-class EnterpriseSearchServiceTest extends SearchServiceTest
+class EnterpriseSearchServiceTest extends SapphireTest
 {
 
     protected static $fixture_file = 'EnterpriseSearchServiceTest.yml'; // phpcs:ignore
@@ -1651,6 +1653,14 @@ class EnterpriseSearchServiceTest extends SearchServiceTest
         $documentBuilder = Injector::inst()->get(DocumentBuilder::class);
 
         $this->searchService = EnterpriseSearchService::create($elasticClient, $indexConfiguration, $documentBuilder);
+    }
+
+    protected function mockConfig(): IndexConfigurationFake
+    {
+        Injector::inst()->registerService($config = new IndexConfigurationFake(), IndexConfiguration::class);
+        SearchServiceExtension::singleton()->setConfiguration($config);
+
+        return $config;
     }
 
 }
