@@ -216,8 +216,9 @@ class EnterpriseSearchService implements IndexingInterface, BatchDocumentRemoval
             foreach ($deletedDocs as $doc) {
                 $deleted = $doc['deleted'] ?? false;
 
+                // phpcs:ignore SlevomatCodingStandard.ControlStructures.EarlyExit.EarlyExitNotUsed
                 if ($deleted) {
-                    $numDeleted++;
+                    $numDeleted += 1;
                 }
             }
 
@@ -445,7 +446,7 @@ class EnterpriseSearchService implements IndexingInterface, BatchDocumentRemoval
     {
         $allEngines = $this->fetchEngines();
 
-        if (in_array($index, $allEngines)) {
+        if (in_array($index, $allEngines, true)) {
             return;
         }
 
@@ -551,7 +552,7 @@ class EnterpriseSearchService implements IndexingInterface, BatchDocumentRemoval
                 $type = $field->getOption('type') ?? self::DEFAULT_FIELD_TYPE;
 
                 // We can't progress if a type that we don't support has been defined
-                if (!in_array($type, $validTypes)) {
+                if (!in_array($type, $validTypes, true)) {
                     throw new IndexConfigurationException(sprintf(
                         'Invalid field type: %s',
                         $type

@@ -603,7 +603,10 @@ class EnterpriseSearchServiceTest extends SapphireTest
         $expectedMap = [
             'content' => [
                 [
-                    'id' => sprintf('silverstripe_searchservice_tests_fake_dataobjectfake_%s', $documentOne->ID),
+                    'id' => sprintf(
+                        'silverstripe_searchserviceelastic_tests_fake_dataobjectfake_%s',
+                        $documentOne->ID
+                    ),
                     'title' => 'Dataobject one',
                     'html_text' => 'WHAT ARE WE YELLING ABOUT? Then a break Then a new line and a tab ',
                     'record_base_class' => DataObjectFake::class,
@@ -611,7 +614,10 @@ class EnterpriseSearchServiceTest extends SapphireTest
                     'source_class' => DataObjectFake::class,
                 ],
                 [
-                    'id' => sprintf('silverstripe_searchservice_tests_fake_dataobjectfake_%s', $documentThree->ID),
+                    'id' => sprintf(
+                        'silverstripe_searchserviceelastic_tests_fake_dataobjectfake_%s',
+                        $documentThree->ID
+                    ),
                     'title' => 'Dataobject three',
                     'html_text' => 'WHAT ARE WE YELLING ABOUT? Then a break Then a new line and a tab ',
                     'record_base_class' => DataObjectFake::class,

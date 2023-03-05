@@ -8,7 +8,7 @@ use SilverStripe\SearchService\Service\IndexConfiguration;
 class IndexConfigurationFake extends IndexConfiguration
 {
 
-    public array $override = [];
+    protected array $override = [];
 
     public function set(string $setting, mixed $value): IndexConfigurationFake
     {
