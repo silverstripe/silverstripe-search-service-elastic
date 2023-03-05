@@ -7,6 +7,9 @@ After:
   - 'search-service-default'
 ---
 SilverStripe\Core\Injector\Injector:
+  SilverStripe\SearchService\Service\IndexConfiguration:
+    constructor:
+      index_variant: '`ENTERPRISE_SEARCH_ENGINE_PREFIX`'
   SilverStripe\SearchService\Interfaces\IndexingInterface:
     class: SilverStripe\SearchServiceElastic\Service\EnterpriseSearchService
     constructor:

@@ -15,6 +15,7 @@ use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\SearchService\DataObject\DataObjectDocument;
 use SilverStripe\SearchService\Extensions\SearchServiceExtension;
+use SilverStripe\SearchService\Interfaces\IndexingInterface;
 use SilverStripe\SearchService\Service\DocumentBuilder;
 use SilverStripe\SearchService\Service\IndexConfiguration;
 use SilverStripe\SearchServiceElastic\Service\EnterpriseSearchService;
@@ -71,14 +72,17 @@ class EnterpriseSearchServiceTest extends SapphireTest
         // Setting this to null to check that the "no prefix version works
         IndexConfiguration::singleton()->setIndexVariant(null);
 
+        /** @var IndexingInterface|EnterpriseSearchService $indexer */
+        $indexer = Injector::inst()->get(IndexingInterface::class);
+
         // No change to our indexName should be made
-        $this->assertEquals('content', EnterpriseSearchService::environmentizeIndex('content'));
+        $this->assertEquals('content', $indexer->environmentizeIndex('content'));
 
         // Setting this back to a value to check the appending words
         IndexConfiguration::singleton()->setIndexVariant('dev-test');
 
         // Our indexName should now be updated to include our environment name
-        $this->assertEquals('dev-test-content', EnterpriseSearchService::environmentizeIndex('content'));
+        $this->assertEquals('dev-test-content', $indexer->environmentizeIndex('content'));
     }
 
     /**

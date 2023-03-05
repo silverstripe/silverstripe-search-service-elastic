@@ -53,7 +53,7 @@ class EnterpriseSearchService implements IndexingInterface, BatchDocumentRemoval
         $this->setBuilder($exporter);
     }
 
-    public static function environmentizeIndex(string $indexName): string
+    public function environmentizeIndex(string $indexName): string
     {
         $variant = IndexConfiguration::singleton()->getIndexVariant();
 
@@ -102,7 +102,7 @@ class EnterpriseSearchService implements IndexingInterface, BatchDocumentRemoval
 
         foreach ($documentMap as $indexName => $docsToAdd) {
             $response = $this->getClient()->appSearch()
-                ->indexDocuments(new IndexDocuments(static::environmentizeIndex($indexName), $docsToAdd))
+                ->indexDocuments(new IndexDocuments($this->environmentizeIndex($indexName), $docsToAdd))
                 ->asArray();
 
             $this->handleError($response);
@@ -157,7 +157,7 @@ class EnterpriseSearchService implements IndexingInterface, BatchDocumentRemoval
 
         foreach ($documentMap as $indexName => $idsToRemove) {
             $response = $this->getClient()->appSearch()
-                ->deleteDocuments(new DeleteDocuments(static::environmentizeIndex($indexName), $idsToRemove))
+                ->deleteDocuments(new DeleteDocuments($this->environmentizeIndex($indexName), $idsToRemove))
                 ->asArray();
 
             $this->handleError($response);
@@ -181,7 +181,7 @@ class EnterpriseSearchService implements IndexingInterface, BatchDocumentRemoval
      */
     public function removeAllDocuments(string $indexName): int
     {
-        $indexName = static::environmentizeIndex($indexName);
+        $indexName = $this->environmentizeIndex($indexName);
         $cfg = $this->getConfiguration();
         $client = $this->getClient();
         $numDeleted = 0;
@@ -260,7 +260,7 @@ class EnterpriseSearchService implements IndexingInterface, BatchDocumentRemoval
 
         foreach (array_keys($this->getConfiguration()->getIndexes()) as $indexName) {
             $response = $this->getClient()->appSearch()
-                ->getDocuments(new GetDocuments(static::environmentizeIndex($indexName), $ids))
+                ->getDocuments(new GetDocuments($this->environmentizeIndex($indexName), $ids))
                 ->asArray();
 
             $this->handleError($response);
@@ -292,7 +292,7 @@ class EnterpriseSearchService implements IndexingInterface, BatchDocumentRemoval
      */
     public function listDocuments(string $indexName, ?int $pageSize = null, int $currentPage = 0): array
     {
-        $request = new ListDocuments(static::environmentizeIndex($indexName));
+        $request = new ListDocuments($this->environmentizeIndex($indexName));
         $request->setCurrentPage($currentPage);
 
         if ($pageSize) {
@@ -332,7 +332,7 @@ class EnterpriseSearchService implements IndexingInterface, BatchDocumentRemoval
     public function getDocumentTotal(string $indexName): int
     {
         $response = $this->getClient()->appSearch()
-            ->listDocuments(new ListDocuments(static::environmentizeIndex($indexName)))
+            ->listDocuments(new ListDocuments($this->environmentizeIndex($indexName)))
             ->asArray();
 
         $this->handleError($response);
@@ -359,7 +359,7 @@ class EnterpriseSearchService implements IndexingInterface, BatchDocumentRemoval
         foreach (array_keys($this->getConfiguration()->getIndexes()) as $indexName) {
             $this->validateIndex($indexName);
 
-            $envIndex = static::environmentizeIndex($indexName);
+            $envIndex = $this->environmentizeIndex($indexName);
             $this->findOrMakeIndex($envIndex);
 
             // Fetch the Schema, as it currently exists in Elastic
