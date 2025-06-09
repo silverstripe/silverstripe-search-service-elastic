@@ -26,7 +26,10 @@ To start using EnterpriseSearch, define environment variables containing your pr
 ENTERPRISE_SEARCH_ENDPOINT="https://abc123.app-search.ap-southeast-2.aws.found.io"
 ENTERPRISE_SEARCH_API_KEY="private-abc123"
 ENTERPRISE_SEARCH_ENGINE_PREFIX="value-excluding-index-name"
+SEARCH_DASHBOARD_URL="https://abc123.app-search.kb-southeast-2.aws.found.io"
 ```
+
+Elastic enterprise search dashboard URL(`SEARCH_DASHBOARD_URL`). If this matches the `ENTERPRISE_SEARCH_ENDPOINT`, there's no need to define it. It will automatically fall back to the value of the `ENTERPRISE_SEARCH_ENDPOINT` environment variable.
 
 ## Configuring EnterpriseSearch
 
