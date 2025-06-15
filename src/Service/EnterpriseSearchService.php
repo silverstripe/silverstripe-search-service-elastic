@@ -66,7 +66,8 @@ class EnterpriseSearchService implements IndexingInterface, BatchDocumentRemoval
 
     public function getExternalURL(): ?string
     {
-        return Environment::getEnv('ENTERPRISE_SEARCH_ENDPOINT') ?: null;
+        return Environment::getEnv('SEARCH_DASHBOARD_URL') ?:
+            (Environment::getEnv('ENTERPRISE_SEARCH_ENDPOINT') ?: null);
     }
 
     public function getExternalURLDescription(): ?string
